@@ -1,0 +1,232 @@
+<style>
+
+  .cupons-section{
+    display:flex;
+    justify-content:center;
+    align-content:center;
+    flex-direction:column;
+    background-image:linear-gradient(0deg, rgba(142,142,142,1) 0%, rgba(57,57,57,0.5) 0%),url("{{ section.settings.imagem | img_url:'1920x1080'}}");
+    background-size:cover;
+  }
+
+  .bloco-texto{
+    width:45%;
+    color:white;
+    margin:0 auto;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    text-align:center;
+  }
+
+  .bloco-texto > a{
+    text-decoration:none;
+    color:white;
+    font-weight:500;
+    background:{{section.settings.cor-botao }};
+    padding: 8px 52px;
+    border-radius:4px;
+  }
+
+  .bloco-texto > h2{
+    font-weight:600;
+    font-size:36px;
+    color:white;
+  }
+
+  .box{
+    display:flex;
+    justify-content:center;
+    margin-left:14px;
+
+  }
+
+  .cards-desconto{
+    display:flex;
+    flex-direction:column;
+    text-align:center;
+    margin-top:46px;
+    box-shadow: 2px 8px 8px 2px #323232;
+    border-radius:16px;
+    width:190px;
+    background: #ffffff;
+    font-weight: 900;
+  }
+  
+  .cards-desconto > h2{
+    margin-top:-28px;
+    font-weight:bold;
+    font-size:70px;
+  }
+    
+  .cards-desconto > .texto-baixo{
+    margin-top:-58px;
+  }
+    
+  .linha-codigo{
+    background:#e71d35;
+    border-radius: 0 0 16px 16px;
+    width:100%;
+  }
+
+  .linha-codigo > p{
+    color:white;
+    font-size:20px;
+    border-top:4px dashed white;
+  }
+
+  @media screen and (max-width: 860px){
+  
+    .box{
+     flex-direction: column; 
+     margin:0;
+     align-items:center;
+    }
+
+    .bloco-texto{
+      width:80%;
+    }
+  }
+
+
+</style>
+
+<div class="cupons-section">
+  <div class="bloco-texto">
+    <h2 style="color: {{ section.settings.cor-cabecalho }}">{{ section.settings.cabecalho | upcase }}</h2>
+    <p style="color: {{ section.settings.cor-descricao }}">{{ section.settings.descricao }}</p>
+    <a href="{{section.settings.link-botao}}">
+      {{ section.settings.botao | upcase }}
+    </a>
+  </div>
+
+  {% for block in section.blocks %}
+
+    <div class="box">
+    <div class="cards-desconto">
+      <p style="color: {{ block.settings.cor_tema_second }}">{{ block.settings.texto-acima | upcase }}</p>
+      <h2 style="color: {{ block.settings.cor_tema_pri }}">{{ block.settings.desconto }}</h2>
+      <p class="texto-baixo" style="color: {{ block.settings.cor_tema_second }}">{{ block.settings.texto-abaixo | upcase }}</p>
+      <div class="linha-codigo" style="background: {{ block.settings.cor_tema_pri }}">
+          <p>{{ block.settings.codigo | upcase}}</p>
+      </div>  
+      
+    </div>
+
+  {% endfor %}
+</div>
+</div>  
+
+  {% schema %}
+  {
+   "name":"Desafio Astron",
+   "max_blocks": 4,
+   "settings": [
+    {
+      "type": "image_picker",
+      "id": "imagem",
+      "label": "Imagem"
+    },
+    {
+      "id":"cabecalho",
+      "type":"text",
+      "label":"Cabeçalho",
+      "default":"a gente sabe que você ama cupom!"
+    },
+    {
+      "id":"descricao",
+      "type":"text",
+      "label":"Descrição",
+      "default":"Por isso, preparamos vários deles para você aproveitar nossas ofertas com ainda mais desconto."
+    },
+    {
+      "id":"link-botao",
+      "type":"url",
+      "label":"Link do botão"
+    },
+    {
+      "id":"botao",
+      "type":"text",
+      "label":"Texto do botão",
+      "default":"vem cá!"
+    },
+    {
+      "type": "color",
+      "id": "cor-botao",
+      "label": "Cor do botão",
+      "default": "#e71d35"
+    },
+    {
+      "type": "color",
+      "id": "cor-cabecalho",
+      "label": "Cor do cabeçalho",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "cor-descricao",
+      "label": "Cor da descrição",
+      "default": "#ffffff"
+    }
+   ],
+   "blocks":[
+    {
+      "type":"select",
+      "name":"Cards desconto",
+      "settings":[
+        {
+          "type": "color",
+          "id": "cor_tema_pri",
+          "label": "Cor tema primária",
+          "default": "#e71d35"
+        },
+        {
+          "type": "color",
+          "id": "cor_tema_second",
+          "label": "Cor tema secundária",
+          "default": "#0B24B4"
+        },
+        {
+          "id":"texto-acima",
+          "type":"text",
+          "label":"Texto de cima",
+          "default":"CUPOM DE ATÉ"
+        },
+        {
+          "id":"desconto",
+          "type":"text",
+          "label":"Desconto",
+          "default":"20%"
+        },
+        {
+          "id":"texto-abaixo",
+          "type":"text",
+          "label":"Texto de baixo",
+          "default":"DE DESCONTO"
+        },
+        {
+          "id":"codigo",
+          "type":"text",
+          "label":"Código da promoção",
+          "default":"USE: VCMERECE"
+        }
+      ]
+    }
+   ],
+   "presets":[
+    {
+      "name":"Desafio Astron",
+      "category":"Custom",
+      "blocks":[
+        {
+          "type":"select"
+        },
+        {
+          "type":"select"
+        }
+      ]
+    }
+   ]
+  }
+
+  {% endschema %}
